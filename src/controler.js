@@ -9,8 +9,9 @@ module.exports = {
   },
 
   async get(req, res) {
+    const { token } = req.params;
     try {
-      return res.send("Gerar link de pagamento");
+      return res.send("Gerar link de pagamento para" + atob(token));
     } catch (error) {
       return res.status(500).send({ error: "Erro ao gerar link de pagamento" });
     }
