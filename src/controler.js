@@ -9,7 +9,7 @@ module.exports = {
   },
 
   async get(req, res) {
-    const { token } = req.params;
+    const { token } = req.query;
     try {
       return res.send("Gerar link de pagamento para" + atob(token));
     } catch (error) {
