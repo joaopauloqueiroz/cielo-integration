@@ -22,7 +22,7 @@ async function createLink(order, token) {
 
   try {
     const response = await axios.post('https://cieloecommerce.cielo.com.br/api/public/v1/products/', order, { headers: { Authorization: `Bearer ${token}` } } );
-    return response;
+    return response.data;
   } catch (error) {
     console.log(error);
   }

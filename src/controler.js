@@ -63,19 +63,22 @@ module.exports = {
     const buff = new Buffer.from(token, "base64");
     try {
       const orderData = await model.getOrder(buff.toString("ascii"));
-      console.log(orderData)
      if(orderData) {
       const result = await generateAuth();
       const objectOrder = { 
         type: "Digital",
-        name: ` Orçaento numero: ${orderData.orderId}`,
+        name: ` Orçaento numero: ${orderData.orderid}`,
         description: "Orçamento dos pedidos da loja pronto socorro do vidro",
         showDescription: true,
         price: orderData.price,
-        expirationDate: orderData.dateValidate
+        expirationDate: orderData.dateValidate,
+        "shipping": {
+          "type": "WithoutShipping",
+          "name": "Pronto socorro do Vidro",
+          "price": 0
+        }
       }
       const response = await createLink(objectOrder, result.access_token)
-      console.log(response.data)
       return res.send(response.data);
      }
      return res.send("Orçamendo não e mais valido");
