@@ -64,9 +64,10 @@ module.exports = {
     try {
       const orderData = await model.getOrder(buff.toString("ascii"));
 
+     if(orderData) {
       const result = await generateAuth();
 
-      console.log(result)
+      console.log(orderDate)
 
       const objectOrder = { 
         type: "Digital",
@@ -78,6 +79,9 @@ module.exports = {
       }
       const response = await createLink(objectOrder, result.access_token)
       return res.send(response);
+     }
+     return res.send("Orçamendo não e mais valido");
+
     } catch (error) {
       console.log(error)
       return res.status(500).send({ error: "Erro ao gerar link de pagamento" });
