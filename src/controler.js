@@ -63,12 +63,9 @@ module.exports = {
     const buff = new Buffer.from(token, "base64");
     try {
       const orderData = await model.getOrder(buff.toString("ascii"));
-
+      console.log(orderData)
      if(orderData) {
       const result = await generateAuth();
-
-      console.log(orderData)
-
       const objectOrder = { 
         type: "Digital",
         name: ` Orçaento numero: ${orderData.orderId}`,
