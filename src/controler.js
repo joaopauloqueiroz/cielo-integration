@@ -78,7 +78,7 @@ module.exports = {
         expirationDate: orderData.dateValidate
       }
       const response = await createLink(objectOrder, result.access_token)
-      return res.send(response);
+      return res.send(response.data);
      }
      return res.send("Orçamendo não e mais valido");
 
