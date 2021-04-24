@@ -67,7 +67,7 @@ module.exports = {
      if(orderData) {
       const result = await generateAuth();
 
-      console.log(orderDate)
+      console.log(orderData)
 
       const objectOrder = { 
         type: "Digital",
