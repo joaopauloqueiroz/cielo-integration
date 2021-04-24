@@ -1,11 +1,12 @@
 const axios = require("axios");
 const model = require("./database/models");
 const { generateLink } = require("./cielo");
+const moment = require("moment-timezone");
 
 function formatDate(date) {
   const year = date.substring(0, 4);
-  const day = date.substring(4, 6);
-  const month = date.substring(6, 8);
+  const month = date.substring(4, 6);
+  const day = date.substring(6, 8);
   return `${year}-${month}-${day}`;
 }
 module.exports = {
@@ -19,20 +20,37 @@ module.exports = {
       price,
     } = req.body;
     try {
-      await model.saveOrder({
-        orderId,
-        sellerName,
-        sellerEmail,
-        dateEmission: formatDate(dateEmission),
-        dateValidate: formatDate(dateValidate),
-        price,
-      });
+      const orderData = await model.getOneOrder(orderId);
+      if (orderData) {
+        console.log('atualizar')
+        await model.updateOrder({
+          orderId,
+          sellerName,
+          sellerEmail,
+          dateEmission: formatDate(dateEmission),
+          dateValidate: moment(formatDate(dateEmission)).add(10, 'days').format('YYYY-MM-DD'),
+          price,
+        });
+        console.log('segunda parte')
+        await model.updateOrderStatus({ orderId, status: 'open' });
+      } else {
+        await model.saveOrder({
+          orderId,
+          sellerName,
+          sellerEmail,
+          dateEmission: formatDate(dateEmission),
+          dateValidate: moment(formatDate(dateEmission)).add(10, 'days').format('YYYY-MM-DD'),
+          price,
+        });
+        await model.saveOrderStatus({ orderId, status: 'open' });
+      }
+
       return res.send({
         orderId,
         sellerName,
         sellerEmail,
         dateEmission: formatDate(dateEmission),
-        dateValidate: formatDate(dateValidate),
+        dateValidate: moment(formatDate(dateEmission)).add(10, 'days').format('YYYY-MM-DD'),
         price,
       });
     } catch (error) {
@@ -48,9 +66,18 @@ module.exports = {
 
       // const result = await generateLink();
 
-      return res.send(orderData );
+      return res.send(orderData);
     } catch (error) {
       return res.status(500).send({ error: "Erro ao gerar link de pagamento" });
     }
   },
+  async update(req, res) {
+    return res.status.send({ status: true});
+  },
+
+  async notification(req, res) {
+    return res.status.send({ status: true});
+
+  }
+
 };
