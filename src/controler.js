@@ -66,6 +66,8 @@ module.exports = {
 
       const result = await generateAuth();
 
+      console.log(result)
+
       const objectOrder = { 
         type: "Digital",
         name: ` Orçaento numero: ${orderData.orderId}`,
@@ -77,6 +79,7 @@ module.exports = {
       const response = await createLink(objectOrder, result.access_token)
       return res.send(response);
     } catch (error) {
+      console.log(error)
       return res.status(500).send({ error: "Erro ao gerar link de pagamento" });
     }
   },
