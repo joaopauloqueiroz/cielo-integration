@@ -12,9 +12,21 @@ async function getAuth() {
   }
 }
 
-async function generateLink() {
+async function generateAuth() {
   const auth = await getAuth()
   return auth;
 }
 
-module.exports = { generateLink }
+
+async function createLink(order, token) {
+
+  try {
+    const response = await axios.post('https://cieloecommerce.cielo.com.br/api/public/v1/products/', order, { headers: { Authorization: token } } )
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
+module.exports = { generateAuth, createLink }

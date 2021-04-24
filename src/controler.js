@@ -1,6 +1,6 @@
 const axios = require("axios");
 const model = require("./database/models");
-const { generateLink } = require("./cielo");
+const { generateAuth, createLink } = require("./cielo");
 const moment = require("moment-timezone");
 
 function formatDate(date) {
@@ -64,9 +64,18 @@ module.exports = {
     try {
       const orderData = await model.getOrder(buff.toString("ascii"));
 
-      // const result = await generateLink();
+      const result = await generateAuth();
 
-      return res.send(orderData);
+      const objectOrder = { 
+        type: "Digital",
+        name: ` Orçaento numero: ${orderData.orderId}`,
+        description: "Orçamento dos pedidos da loja pronto socorro do vidro",
+        showDescription: true,
+        price: orderData.price,
+        expirationDate: orderData.dateValidate
+      }
+      const response = await createLink(objectOrder, result.access_token)
+      return res.send(response);
     } catch (error) {
       return res.status(500).send({ error: "Erro ao gerar link de pagamento" });
     }
