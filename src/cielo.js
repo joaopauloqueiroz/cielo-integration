@@ -21,7 +21,7 @@ async function generateAuth() {
 async function createLink(order, token) {
 
   try {
-    const response = await axios.post('https://cieloecommerce.cielo.com.br/api/public/v1/products/', order, { headers: { Authorization: token } } )
+    const response = await axios.post('https://cieloecommerce.cielo.com.br/api/public/v1/products/', order, { headers: { Authorization: `Bearer ${token}` } } );
     return response;
   } catch (error) {
     console.log(error);
