@@ -78,13 +78,12 @@ module.exports = {
         expirationDate: orderData.dateValidate
       }
       const response = await createLink(objectOrder, result.access_token)
-      console.log(response)
+      console.log(response.data)
       return res.send(response.data);
      }
      return res.send("Orçamendo não e mais valido");
 
     } catch (error) {
-      console.log(error)
       return res.status(500).send({ error: "Erro ao gerar link de pagamento" });
     }
   },
