@@ -70,7 +70,7 @@ module.exports = {
         name: ` Orçaento numero: ${orderData.orderid}`,
         description: "Orçamento dos pedidos da loja pronto socorro do vidro",
         showDescription: true,
-        price: orderData.price,
+        price: Number(orderData.price),
         expirationDate: orderData.dateValidate,
         "shipping": {
           "type": "WithoutShipping",
