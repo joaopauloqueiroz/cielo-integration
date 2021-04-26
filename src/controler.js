@@ -78,8 +78,9 @@ module.exports = {
           "price": 0
         }
       }
-      const response = await createLink(objectOrder, result.access_token)
-      return res.redirect(response.shortUrl)
+      return res.send({ok: true})
+      // const response = await createLink(objectOrder, result.access_token)
+      // return res.redirect(response.shortUrl)
      }
      return res.send("Orçamendo não e mais valido");
 
