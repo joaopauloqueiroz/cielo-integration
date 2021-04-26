@@ -78,9 +78,8 @@ module.exports = {
           "price": 0
         }
       }
-      return res.send({ok: true})
-      // const response = await createLink(objectOrder, result.access_token)
-      // return res.redirect(response.shortUrl)
+      const response = await createLink(objectOrder, result.access_token)
+      return res.redirect(response.shortUrl)
      }
      return res.send("Orçamendo não e mais valido");
 
@@ -89,11 +88,11 @@ module.exports = {
     }
   },
   async update(req, res) {
-    return res.status.send({ status: true});
+    return res.status(200).send({ status: true});
   },
 
   async notification(req, res) {
-    return res.status.send({ status: true});
+    return res.status(200).send({ status: true});
 
   }
 
